@@ -1,0 +1,14 @@
+{
+    "name": "superini",
+    "version": "0.0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+    },
+    "keywords": [
+        "ini"
+    ],
+    "author": "ItsLemonChan",
+    "license": "MIT",
+    "packageManager": "pnpm@10.12.4"
+}
