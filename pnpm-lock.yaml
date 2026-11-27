@@ -11,6 +11,9 @@ importers:
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
+      '@types/node':
+        specifier: ^26.6.11
+        version: 26.6.11
       jest:
         specifier: ^30.5.2
         version: 30.5.2(@types/node@26.6.11)
