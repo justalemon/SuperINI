@@ -1,6 +1,9 @@
-import { parse } from "../superini";
 import { readFileSync } from "fs";
 import { resolve } from "path";
+
+import { describe, expect, test } from "@jest/globals";
+
+import { parse } from "../superini";
 
 const expectedOutputStandard = {
     env: {
