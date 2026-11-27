@@ -1,3 +1,8 @@
+const reSection = /^\s*\[\s*([^\]]*)\s*\]\s*$/;
+const reValue = /^\s*([\w\.\-\_]+)\s*=\s*(.*?)\s*$/;
+const reComment = /^\s*[#;].*$/;
+const reListValue = /^\s+(.*)\s*$/
+
 /**
  * Base Error class for all SuperINI errors.
  */
@@ -22,4 +27,62 @@ class ParseError extends SuperIniError {
     constructor(reason: string) {
         super(`Unable to parse: ${reason}`);
     }
+}
+
+/**
+ * Parses an INI string.
+ * @param ini The INI to parse as a string.
+ */
+export function parse(ini: string) {
+    if (typeof(ini) !== "string") {
+        throw new ParseError(`Expected string, got ${typeof(ini)}`);
+    }
+
+    const obj: any = {}
+    let lastSection = "*";
+    let lastList = null;
+
+    for (let line of ini.split(/\r\n|\r|\n/)) {
+        // Ignore comments
+        if (reComment.test(line)) {
+            continue;
+        }
+
+        // Parse list values
+        const listMatch = line.match(reListValue);
+        if (listMatch && lastList !== null) {
+            if (!obj[lastSection][lastList]) {
+                obj[lastSection][lastList] = []
+            }
+            obj[lastSection][lastList].push(listMatch[1]);
+            continue;
+        }
+        lastList = null;
+
+        // Parse Sections
+        const sectionMatch = line.match(reSection);
+        if (sectionMatch) {
+            lastSection = sectionMatch[1];
+            continue;
+        }
+
+        // Parse Values
+        const valueMatch = line.match(reValue);
+        if (valueMatch) {
+            if (!obj[lastSection]) {
+                obj[lastSection] = {}
+            }
+
+            if (valueMatch[2] == "") {
+                lastList = valueMatch[1];
+                continue;
+            }
+
+            obj[lastSection][valueMatch[1]] = valueMatch[2];
+
+            continue;
+        }
+    }
+
+    return obj;
 }
