@@ -10,6 +10,12 @@
         "noImplicitAny": true
     },
     "files": [
-        "superini.ts"
-    ]
+        "superini.ts",
+        "jest.config.ts"
+    ],
+     "ts-node": {
+        "moduleTypes": {
+            "jest.config.ts": "cjs"
+        }
+    }
 }
