@@ -9,9 +9,8 @@
         "target": "es2022",
         "noImplicitAny": true
     },
-    "files": [
-        "superini.ts",
-        "jest.config.ts"
+    "include": [
+        "superini.ts"
     ],
      "ts-node": {
         "moduleTypes": {
