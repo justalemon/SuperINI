@@ -27,4 +27,7 @@ describe("dump of objects", () => {
     test("dump with no settings", () => {
         expect(dump(base)).toBe(expected);
     });
+    test("dump with empty sections", () => {
+        expect(dump({"a": []})).toBe("");
+    });
 });

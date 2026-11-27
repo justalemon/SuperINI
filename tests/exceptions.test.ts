@@ -8,6 +8,9 @@ describe("check raised exceptions of dumper", () => {
     test("string as dumper input", () => {
         expect(() => dump("hi" as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object, got string");
     });
+    test("function as adata", () => {
+        expect(() => dump({"a": {"f": function () {}}})).toThrow("Unable to dump: Unexpected Value type: function");
+    });
 });
 
 describe("check raised exceptions of parser", () => {
