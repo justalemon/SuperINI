@@ -10,5 +10,11 @@
     ],
     "author": "ItsLemonChan",
     "license": "MIT",
-    "packageManager": "pnpm@10.12.4"
+    "packageManager": "pnpm@10.12.4",
+    "devDependencies": {
+        "@types/jest": "^30.0.0",
+        "jest": "^30.5.2",
+        "ts-jest": "^29.4.15",
+        "typescript": "6.0.3"
+    }
 }
