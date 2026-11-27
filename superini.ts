@@ -106,3 +106,54 @@ export function parse(ini: string, options?: ParserOptions) {
 
     return obj;
 }
+
+/**
+ * The options for the dumper.
+ */
+export interface DumpOptions {
+}
+
+/**
+ * Transform an object into an INI string.
+ * @param obj The object to dump.
+ * @param options The options to dump.
+ * @returns A stringified version of the object.
+ */
+export function dump(obj: Record<string, Record<string, any>>, options?: DumpOptions) {
+    let str = "";
+
+    for (const sectionName of Object.keys(obj)) {
+        if (typeof(sectionName) !== "string") {
+            // TODO: Error
+            continue;
+        }
+
+        const sectionValues = obj[sectionName];
+
+        if (sectionValues.length < 1) {
+            continue;
+        }
+
+        str += `[${sectionName}]\n`;
+
+        for (const key of Object.keys(sectionValues)) {
+            const value = sectionValues[key];
+            const type = typeof(value);
+
+            if (type === "bigint" || type === "boolean" || type === "number" || type === "string") {
+                str += `${key} = ${value}\n`;
+            } else if (Array.isArray(value)) {
+                str += `${key} =\n`;
+
+                for (const v of value) {
+                    str += `    ${v}\n`;
+                }
+            } else {
+                // TODO: Error
+                continue;
+            }
+        }
+    }
+
+    return str;
+}
