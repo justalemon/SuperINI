@@ -3,6 +3,13 @@
         "types": [
             "node",
             "jest"
-        ]
-    }
+        ],
+        "outDir": "./dist",
+        "declaration": true,
+        "target": "es2022",
+        "noImplicitAny": true
+    },
+    "files": [
+        "superini.ts"
+    ]
 }

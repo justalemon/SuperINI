@@ -2,12 +2,21 @@
     "name": "superini",
     "version": "0.0.0.1",
     "description": "",
-    "main": "index.js",
+    "exports": {
+        ".": {
+            "types": "./dist/superini.d.ts",
+            "import": "./dist/superini.js"
+        }
+    },
+    "type": "module",
     "scripts": {
         "test": "npx jest"
     },
     "keywords": [
         "ini"
+    ],
+    "files": [
+        "dist"
     ],
     "author": "ItsLemonChan",
     "license": "MIT",
