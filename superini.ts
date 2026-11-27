@@ -30,12 +30,27 @@ class ParseError extends SuperIniError {
 }
 
 /**
+ * The options for the parser.
+ */
+export interface ParserOptions {
+    /**
+     * Whether the lists should be flattened into a string.
+     */
+    flattenLists?: boolean;
+}
+
+/**
  * Parses an INI string.
  * @param ini The INI to parse as a string.
+ * @param options The custom parser options.
  */
-export function parse(ini: string) {
+export function parse(ini: string, options?: ParserOptions) {
     if (typeof(ini) !== "string") {
         throw new ParseError(`Expected string, got ${typeof(ini)}`);
+    }
+
+    if (!options) {
+        options = {};
     }
 
     const obj: any = {}
@@ -52,9 +67,14 @@ export function parse(ini: string) {
         const listMatch = line.match(reListValue);
         if (listMatch && lastList !== null) {
             if (!obj[lastSection][lastList]) {
-                obj[lastSection][lastList] = []
+                obj[lastSection][lastList] = options.flattenLists ? "" : [];
             }
-            obj[lastSection][lastList].push(listMatch[1]);
+
+            if (options.flattenLists) {
+                obj[lastSection][lastList] += " " + listMatch[1];
+            } else {
+                obj[lastSection][lastList].push(listMatch[1]);
+            }
             continue;
         }
         lastList = null;
