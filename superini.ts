@@ -136,10 +136,6 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
     let str = "";
 
     for (const sectionName of Object.keys(obj)) {
-        if (typeof(sectionName) !== "string") {
-            throw new DumpError("Unexpected Key type: " + typeof(sectionName));
-        }
-
         const sectionValues = obj[sectionName];
 
         if (sectionValues.length < 1) {
