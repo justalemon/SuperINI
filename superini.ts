@@ -30,6 +30,19 @@ class ParseError extends SuperIniError {
 }
 
 /**
+ * Common error for all dump errors.
+ */
+class DumpError extends SuperIniError {
+    /**
+     * Creates a new dump error.
+     * @param reason The reason why the dump failed.
+     */
+    constructor(reason: string) {
+        super(`Unable to dump: ${reason}`);
+    }
+}
+
+/**
  * The options for the parser.
  */
 export interface ParserOptions {
@@ -124,8 +137,7 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
 
     for (const sectionName of Object.keys(obj)) {
         if (typeof(sectionName) !== "string") {
-            // TODO: Error
-            continue;
+            throw new DumpError("Unexpected Key type: " + typeof(sectionName));
         }
 
         const sectionValues = obj[sectionName];
@@ -149,8 +161,7 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
                     str += `    ${v}\n`;
                 }
             } else {
-                // TODO: Error
-                continue;
+                throw new DumpError("Unexpected Value type: " + type);
             }
         }
     }
