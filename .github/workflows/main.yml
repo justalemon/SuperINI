@@ -5,6 +5,8 @@ on:
 jobs:
   main:
     runs-on: ubuntu-24.04
+    env:
+      PNPM_CONFIG_MINIMUM_RELEASE_AGE: 0
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: pnpm/setup@v3.2.0
