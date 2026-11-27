@@ -133,6 +133,10 @@ export interface DumpOptions {
  * @returns A stringified version of the object.
  */
 export function dump(obj: Record<string, Record<string, any>>, options?: DumpOptions) {
+    if (typeof(obj) !== "object") {
+        throw new DumpError(`Expected object, got ${typeof(obj)}`);
+    }
+
     let str = "";
 
     for (const sectionName of Object.keys(obj)) {
