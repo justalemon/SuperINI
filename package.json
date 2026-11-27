@@ -10,6 +10,7 @@
     },
     "type": "module",
     "scripts": {
+        "build": "npx tsc",
         "test": "npx jest"
     },
     "keywords": [
