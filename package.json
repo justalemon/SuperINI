@@ -21,7 +21,7 @@
         "dist"
     ],
     "repository": {
-        "url": "https://github.com/justalemon/SuperINI"
+        "url": "git+https://github.com/justalemon/SuperINI.git"
     },
     "author": "Hannele Ruiz",
     "license": "MIT",
