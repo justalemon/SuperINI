@@ -19,7 +19,7 @@
     "files": [
         "dist"
     ],
-    "author": "ItsLemonChan",
+    "author": "Hannele Ruiz",
     "license": "MIT",
     "packageManager": "pnpm@12.23.0",
     "devDependencies": {
