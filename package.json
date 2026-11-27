@@ -19,6 +19,9 @@
     "files": [
         "dist"
     ],
+    "repository": {
+        "url": "https://github.com/justalemon/SuperINI"
+    },
     "author": "Hannele Ruiz",
     "license": "MIT",
     "packageManager": "pnpm@12.23.0",
