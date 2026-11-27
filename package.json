@@ -2,6 +2,7 @@
     "name": "superini",
     "version": "0.1.0",
     "description": "",
+    "main": "dist/superini.js",
     "exports": {
         ".": {
             "types": "./dist/superini.d.ts",
