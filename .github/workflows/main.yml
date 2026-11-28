@@ -1,7 +1,9 @@
 on:
-  - push
-  - pull_request
-  - release
+  release:
+    types:
+      - created
+  push:
+  pull_request:
 
 jobs:
   main:
