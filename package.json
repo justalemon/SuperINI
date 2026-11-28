@@ -11,8 +11,8 @@
     },
     "type": "module",
     "scripts": {
-        "build": "npx tsc",
-        "test": "npx jest"
+        "build": "tsc",
+        "test": "jest"
     },
     "keywords": [
         "ini"
