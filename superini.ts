@@ -62,6 +62,10 @@ export interface ParserOptions {
      * Whetheer to disallow duplicated keys. By default, the last key wins.
      */
     disallowDuplicatedKeys?: boolean;
+    /**
+     * Whether to disallow duplicated sections. 
+     */
+    disallowDuplicatedSections?: boolean;
 }
 
 /**
@@ -119,6 +123,10 @@ export function parse(ini: string, options?: ParserOptions): object {
         if (sectionMatch) {
             if (["__proto__", "constructor", "prototype"].includes(sectionMatch[1])) {
                 throw new ParseError(`Invalid Section Name: ${sectionMatch[1]}`);
+            }
+
+            if (sectionMatch[1] && options.disallowDuplicatedSections) {
+                throw new ParseError(`Detected duplicated section: [${sectionMatch[1]}]`)
             }
 
             lastSection = sectionMatch[1];
