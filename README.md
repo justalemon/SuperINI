@@ -22,7 +22,8 @@ dump(obj)  // '[hi]\nkey = value\n'
 
 ## Remarks
 
-Please note that inline comments are currently not supported.
+* Inline comments are currently not supported
+* Keys are ASCII only
 
 [actions-img]: https://img.shields.io/github/actions/workflow/status/justalemon/SuperINI/main.yml?branch=master&label=actions
 [actions-url]: https://github.com/justalemon/SuperINI/actions
