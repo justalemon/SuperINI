@@ -50,4 +50,7 @@ describe("testing parser", () => {
     test("parse empty keys - skip", () => {
         expect(parse("[section]\nempty=", { skipEmptyKeys: true })).toMatchObject({ section: { } });
     });
+    test("parse double quoted values strings", () => {
+        expect(parse("[section]\nvalue=\"hi\"")).toMatchObject({ section: { value: "hi" } });
+    });
 });

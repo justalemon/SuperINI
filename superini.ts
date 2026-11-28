@@ -157,7 +157,13 @@ export function parse(ini: string, options?: ParserOptions): object {
                 throw new ParseError(`Detected duplicated key: ${valueMatch[1]} in section [${lastSection}]`)
             }
 
-            obj[lastSection][valueMatch[1]] = valueMatch[2];
+            let v = valueMatch[2];
+
+            if (v.startsWith("\"") && v.endsWith("\"")) {
+                v = v.substring(1, v.length - 1);
+            }
+
+            obj[lastSection][valueMatch[1]] = v;
 
             continue;
         }
