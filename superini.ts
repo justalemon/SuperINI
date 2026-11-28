@@ -66,6 +66,10 @@ export interface ParserOptions {
      * Whether to disallow duplicated sections. 
      */
     disallowDuplicatedSections?: boolean;
+    /**
+     * Skip sections that are empty.
+     */
+    skipEmptySections?: boolean;
 }
 
 /**
@@ -123,6 +127,10 @@ export function parse(ini: string, options?: ParserOptions): object {
         if (sectionMatch && sectionMatch[1]) {
             if (["__proto__", "constructor", "prototype"].includes(sectionMatch[1])) {
                 throw new ParseError(`Invalid Section Name: ${sectionMatch[1]}`);
+            }
+
+            if (lastSection !== "*" && !obj[lastSection] && !options.skipEmptySections) {
+                obj[lastSection] = {};
             }
 
             if (obj[sectionMatch[1]] && options.disallowDuplicatedSections) {
