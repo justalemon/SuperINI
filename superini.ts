@@ -61,7 +61,7 @@ export interface ParserOptions {
  * @param ini The INI to parse as a string.
  * @param options The custom parser options.
  */
-export function parse(ini: string, options?: ParserOptions) {
+export function parse(ini: string, options?: ParserOptions): object {
     if (typeof(ini) !== "string") {
         throw new ParseError(`Expected string, got ${typeof(ini)}`);
     }
