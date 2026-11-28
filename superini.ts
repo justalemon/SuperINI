@@ -66,7 +66,7 @@ export function parse(ini: string, options?: ParserOptions) {
         options = {};
     }
 
-    const obj: any = {}
+    const obj: any = Object.create(null);
     let lastSection = "*";
     let lastList = null;
 
@@ -95,6 +95,10 @@ export function parse(ini: string, options?: ParserOptions) {
         // Parse Sections
         const sectionMatch = line.match(reSection);
         if (sectionMatch) {
+            if (["__proto__", "constructor", "prototype"].includes(sectionMatch[1])) {
+                throw new ParseError(`Invalid Section Name: ${sectionMatch[1]}`);
+            }
+
             lastSection = sectionMatch[1];
             continue;
         }
@@ -102,6 +106,10 @@ export function parse(ini: string, options?: ParserOptions) {
         // Parse Values
         const valueMatch = line.match(reValue);
         if (valueMatch) {
+            if (["__proto__", "constructor", "prototype"].includes(valueMatch[1])) {
+                throw new ParseError(`Invalid Key Name: ${valueMatch[1]}`);
+            }
+
             if (!obj[lastSection]) {
                 obj[lastSection] = {}
             }

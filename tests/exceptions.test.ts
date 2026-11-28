@@ -24,3 +24,12 @@ describe("check raised exceptions of parser", () => {
         expect(() => parse({} as unknown as string)).toThrow("Unable to parse: Expected string, got object");
     });
 });
+
+describe("check prototype pollution parser exceptions", () => {
+    test("invalid section name", () => {
+        expect(() => parse("[__proto__]")).toThrow("Unable to parse: Invalid Section Name: __proto__");
+    });
+    test("invalid key name", () => {
+        expect(() => parse("[p]\n__proto__=p")).toThrow("Unable to parse: Invalid Key Name: __proto__");
+    });
+});
