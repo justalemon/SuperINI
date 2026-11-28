@@ -1,7 +1,7 @@
 {
     "name": "superini",
     "version": "0.1.0",
-    "description": "",
+    "description": "A Superb INI parser for the Web and Node",
     "main": "dist/superini.js",
     "exports": {
         ".": {
