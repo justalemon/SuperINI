@@ -33,7 +33,7 @@ describe("dump of objects", () => {
         expect(dump(base)).toBe(expected);
     });
     test("dump with empty sections", () => {
-        expect(dump({"a": []})).toBe("");
+        expect(dump({"a": {}})).toBe("");
     });
     test("dump with new lines and escaping", () => {
         expect(dump(newLines)).toBe("[a]\ns = hi\\nhello\n");
