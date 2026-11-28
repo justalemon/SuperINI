@@ -160,7 +160,7 @@ export function parse(ini: string, options?: ParserOptions): object {
                 obj[lastSection] = Object.create(null);
             }
 
-            if (obj[lastSection][valueMatch[1]] && options.disallowDuplicatedKeys) {
+            if (Object.hasOwn(obj[lastSection], valueMatch[1]) && options.disallowDuplicatedKeys) {
                 throw new ParseError(`Detected duplicated key: ${valueMatch[1]} in section [${lastSection}]`)
             }
 
