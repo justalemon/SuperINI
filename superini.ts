@@ -158,7 +158,11 @@ export interface DumpOptions {
  * @returns A stringified version of the object.
  */
 export function dump(obj: Record<string, Record<string, any>>, options?: DumpOptions) {
-    if (typeof(obj) !== "object") {
+    if (obj === null) {
+        throw new DumpError(`Expected object, got null`);
+    } else if (Array.isArray(obj)) {
+        throw new DumpError(`Expected object, got Array`);
+    } else if (typeof(obj) !== "object") {
         throw new DumpError(`Expected object, got ${typeof(obj)}`);
     }
 

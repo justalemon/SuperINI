@@ -8,8 +8,14 @@ describe("check raised exceptions of dumper", () => {
     test("string as dumper input", () => {
         expect(() => dump("hi" as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object, got string");
     });
-    test("function as adata", () => {
+    test("function as dumper input", () => {
         expect(() => dump({"a": {"f": function () {}}})).toThrow("Unable to dump: Unexpected Value type: function");
+    });
+    test("object as dumper input", () => {
+        expect(() => dump(null as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object, got null");
+    });
+    test("array as dumper input", () => {
+        expect(() => dump([] as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object, got Array");
     });
 });
 
