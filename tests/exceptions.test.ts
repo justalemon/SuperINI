@@ -17,6 +17,16 @@ describe("check raised exceptions of dumper", () => {
     test("array as dumper input", () => {
         expect(() => dump([] as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object, got Array");
     });
+
+    test("null as section", () => {
+        expect(() => dump({ "a": null } as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object for section [a], got null");
+    });
+    test("Array as section", () => {
+        expect(() => dump({ "a": [] } as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object for section [a], got Array");
+    });
+    test("number as section", () => {
+        expect(() => dump({ "a": 1 } as unknown as Record<string, Record<string, any>>)).toThrow("Unable to dump: Expected object for section [a], got number");
+    });
 });
 
 describe("check raised exceptions of parser", () => {
