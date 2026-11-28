@@ -130,7 +130,7 @@ export function parse(ini: string, options?: ParserOptions): object {
             }
 
             if (lastSection !== "*" && !obj[lastSection] && !options.skipEmptySections) {
-                obj[lastSection] = {};
+                obj[lastSection] = Object.create(null);
             }
 
             if (obj[sectionMatch[1]] && options.disallowDuplicatedSections) {
@@ -153,7 +153,7 @@ export function parse(ini: string, options?: ParserOptions): object {
             }
 
             if (!obj[lastSection]) {
-                obj[lastSection] = {}
+                obj[lastSection] = Object.create(null);
             }
 
             if (obj[lastSection][valueMatch[1]] && options.disallowDuplicatedKeys) {
