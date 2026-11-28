@@ -56,4 +56,7 @@ describe("testing parser", () => {
     test("parse multiple empty sections", () => {
         expect(parse("[a]\n[b]")).toMatchObject({ a: {}, b: {} });
     });
+    test("parse with no escaping", () => {
+        expect(parse("[a]\nnwl = \\n", { skipNewLineEscape: true })).toMatchObject({ a: { nwl: "\\n" } });
+    });
 });

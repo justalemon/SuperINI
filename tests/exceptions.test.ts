@@ -51,6 +51,10 @@ describe("check raised exceptions of parser", () => {
     test("duplicated empty keys", () => {
         expect(() => parse("[s]\nk=\nk=", { disallowDuplicatedKeys: true })).toThrow("Unable to parse: Detected duplicated key: k in section [s]");
     });
+
+    test("duplicated empty keys", () => {
+        expect(() => parse("", { disallowDuplicatedSections: true, skipEmptySections: true })).toThrow("disallowDuplicatedSections and skipEmptySections were both specified");
+    });
 });
 
 describe("check prototype pollution parser exceptions", () => {
