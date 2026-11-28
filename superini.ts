@@ -58,6 +58,10 @@ export interface ParserOptions {
      * Whether to disallow keys with no sections. Keys with no sections will be grouped under a section *.
      */
     disallowKeyWithNoSection?: boolean;
+    /**
+     * Whetheer to disallow duplicated keys. By default, the last key wins.
+     */
+    disallowDuplicatedKeys?: boolean;
 }
 
 /**
@@ -139,6 +143,10 @@ export function parse(ini: string, options?: ParserOptions): object {
             if (valueMatch[2] == "") {
                 lastList = valueMatch[1];
                 continue;
+            }
+
+            if (obj[lastSection][valueMatch[1]] && options.disallowDuplicatedKeys) {
+                throw new ParseError(`Detected duplicated key: ${valueMatch[1]} in section [${lastSection}]`)
             }
 
             obj[lastSection][valueMatch[1]] = valueMatch[2];

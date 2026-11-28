@@ -32,6 +32,9 @@ describe("check raised exceptions of parser", () => {
     test("key with no section with disallowKeyWithNoSection", () => {
         expect(() => parse("k = v", { disallowKeyWithNoSection: true })).toThrow("Unable to parse: Detected key with no section: k");
     });
+    test("duplicated keys with disallowDuplicatedKeys", () => {
+        expect(() => parse("[s]\nk = v\nk = v", { disallowDuplicatedKeys: true })).toThrow("Unable to parse: Detected duplicated key: k in section [s]");
+    });
 });
 
 describe("check prototype pollution parser exceptions", () => {
