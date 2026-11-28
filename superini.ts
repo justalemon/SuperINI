@@ -6,7 +6,7 @@ const reListValue = /^\s+(.*)\s*$/
 /**
  * Base Error class for all SuperINI errors.
  */
-class SuperIniError extends Error {
+export class SuperIniError extends Error {
     /**
      * Creates a new SuperIni Error.
      * @param message The message of the error.
@@ -19,7 +19,7 @@ class SuperIniError extends Error {
 /**
  * Common error for all parse errors.
  */
-class ParseError extends SuperIniError {
+export class ParseError extends SuperIniError {
     /**
      * Creates a new parse error.
      * @param reason The reason why the parse failed.
@@ -32,7 +32,7 @@ class ParseError extends SuperIniError {
 /**
  * Common error for all dump errors.
  */
-class DumpError extends SuperIniError {
+export class DumpError extends SuperIniError {
     /**
      * Creates a new dump error.
      * @param reason The reason why the dump failed.
