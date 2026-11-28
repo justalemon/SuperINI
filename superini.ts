@@ -90,6 +90,10 @@ export function parse(ini: string, options?: ParserOptions): object {
         options = {};
     }
 
+    if (options.disallowDuplicatedSections && options.skipEmptySections) {
+        throw new ParseError("disallowDuplicatedSections and skipEmptySections were both specified");
+    }
+
     const obj: any = Object.create(null);
     let lastSection = "*";
     let lastList: string | null = null;
