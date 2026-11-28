@@ -70,6 +70,10 @@ export interface ParserOptions {
      * Skip sections that are empty.
      */
     skipEmptySections?: boolean;
+    /**
+     * Skips the escape of newlines in strings.
+     */
+    skipNewLineEscape?: boolean;
 }
 
 /**
@@ -171,9 +175,11 @@ export function parse(ini: string, options?: ParserOptions): object {
                 value = value.substring(1, value.length - 1);
             }
 
-            obj[lastSection][valueMatch[1]] = value;
-
-            continue;
+            if (options.skipNewLineEscape) {
+                obj[lastSection][valueMatch[1]] = value;
+            } else {
+                obj[lastSection][valueMatch[1]] = value.replaceAll("\\n", "\n");
+            }
         }
     }
 
