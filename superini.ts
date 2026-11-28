@@ -88,7 +88,11 @@ export function parse(ini: string, options?: ParserOptions) {
             }
 
             if (options.flattenLists) {
-                obj[lastSection][lastList] += " " + listMatch[1];
+                if (obj[lastSection][lastList] === "") {
+                    obj[lastSection][lastList] = listMatch[1];
+                } else {
+                    obj[lastSection][lastList] += " " + listMatch[1];
+                }
             } else {
                 obj[lastSection][lastList].push(listMatch[1]);
             }
