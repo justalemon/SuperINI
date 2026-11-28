@@ -12,7 +12,9 @@
     "type": "module",
     "scripts": {
         "build": "tsc",
-        "test": "jest"
+        "test": "jest",
+        "typecheck": "tsc --noEmit",
+        "prepack": "pnpm build"
     },
     "keywords": [
         "ini"
