@@ -54,6 +54,10 @@ export interface ParserOptions {
      * Whether to skip the empty keys on each section.
      */
     skipEmptyKeys?: boolean;
+    /**
+     * Whether to disallow keys with no sections. Keys with no sections will be grouped under a section *.
+     */
+    disallowKeyWithNoSection?: boolean;
 }
 
 /**
@@ -122,6 +126,10 @@ export function parse(ini: string, options?: ParserOptions): object {
         if (valueMatch) {
             if (["__proto__", "constructor", "prototype"].includes(valueMatch[1])) {
                 throw new ParseError(`Invalid Key Name: ${valueMatch[1]}`);
+            }
+
+            if (lastSection === "*" && options.disallowKeyWithNoSection) {
+                throw new ParseError(`Detected key with no section: ${valueMatch[1]}`)
             }
 
             if (!obj[lastSection]) {

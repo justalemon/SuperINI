@@ -29,6 +29,9 @@ describe("check raised exceptions of parser", () => {
     test("object as parser input", () => {
         expect(() => parse({} as unknown as string)).toThrow("Unable to parse: Expected string, got object");
     });
+    test("key with no section with disallowKeyWithNoSection", () => {
+        expect(() => parse("k = v", { disallowKeyWithNoSection: true })).toThrow("Unable to parse: Detected key with no section: k");
+    });
 });
 
 describe("check prototype pollution parser exceptions", () => {
