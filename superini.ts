@@ -149,6 +149,10 @@ export function parse(ini: string, options?: ParserOptions) {
  * The options for the dumper.
  */
 export interface DumpOptions {
+    /**
+     * Skips the escape of newlines in strings.
+     */
+    skipNewLineEscape?: boolean;
 }
 
 /**
@@ -166,6 +170,10 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
         throw new DumpError(`Expected object, got ${typeof(obj)}`);
     }
 
+    if (!options) {
+        options = {};
+    }
+
     let str = "";
 
     for (const sectionName of Object.keys(obj)) {
@@ -181,8 +189,10 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
             const value = sectionValues[key];
             const type = typeof(value);
 
-            if (type === "bigint" || type === "boolean" || type === "number" || type === "string") {
+            if (type === "bigint" || type === "boolean" || type === "number" || (type === "string" && options.skipNewLineEscape)) {
                 str += `${key} = ${value}\n`;
+            } else if (type === "string") {
+                str += `${key} = ${value.replaceAll("\n", "\\n")}\n`;
             } else if (Array.isArray(value)) {
                 str += `${key} =\n`;
 
