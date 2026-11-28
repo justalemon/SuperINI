@@ -36,11 +36,18 @@ const expectedOutputFlattened = {
 const filePath = resolve("./tests/platformio.ini");
 const contents = readFileSync(filePath, "utf-8");
 
-describe("testing platformio.ini parsing", () => {
+describe("testing parser", () => {
     test("parse platformio.ini with no settings", () => {
         expect(parse(contents)).toMatchObject(expectedOutputStandard);
     });
     test("parse platformio.ini with flattened lists", () => {
         expect(parse(contents, { flattenLists: true })).toMatchObject(expectedOutputFlattened);
+    });
+
+    test("parse empty keys - keep", () => {
+        expect(parse("[section]\nempty=")).toMatchObject({ section: { empty: null } });
+    });
+    test("parse empty keys - skip", () => {
+        expect(parse("[section]\nempty=", { skipEmptyKeys: true })).toMatchObject({ section: { } });
     });
 });

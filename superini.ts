@@ -50,6 +50,10 @@ export interface ParserOptions {
      * Whether the lists should be flattened into a string.
      */
     flattenLists?: boolean;
+    /**
+     * Whether to skip the empty keys on each section.
+     */
+    skipEmptyKeys?: boolean;
 }
 
 /**
@@ -90,7 +94,13 @@ export function parse(ini: string, options?: ParserOptions) {
             }
             continue;
         }
-        lastList = null;
+        // Handle empty keys
+        if (lastList) {
+            if (!obj[lastSection][lastList] && !options.skipEmptyKeys) {
+                obj[lastSection][lastList] = null;
+            }
+            lastList = null;
+        }
 
         // Parse Sections
         const sectionMatch = line.match(reSection);
@@ -122,6 +132,13 @@ export function parse(ini: string, options?: ParserOptions) {
             obj[lastSection][valueMatch[1]] = valueMatch[2];
 
             continue;
+        }
+    }
+
+    // Handle last empty key
+    if (lastList) {
+        if (!obj[lastSection][lastList] && !options.skipEmptyKeys) {
+            obj[lastSection][lastList] = null;
         }
     }
 
