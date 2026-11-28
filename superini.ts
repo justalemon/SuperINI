@@ -84,7 +84,7 @@ export function parse(ini: string, options?: ParserOptions): object {
 
     const obj: any = Object.create(null);
     let lastSection = "*";
-    let lastList = null;
+    let lastList: string | null = null;
 
     for (let line of ini.split(/\r\n|\r|\n/)) {
         // Ignore comments
@@ -120,7 +120,7 @@ export function parse(ini: string, options?: ParserOptions): object {
 
         // Parse Sections
         const sectionMatch = line.match(reSection);
-        if (sectionMatch) {
+        if (sectionMatch && sectionMatch[1]) {
             if (["__proto__", "constructor", "prototype"].includes(sectionMatch[1])) {
                 throw new ParseError(`Invalid Section Name: ${sectionMatch[1]}`);
             }
@@ -135,7 +135,7 @@ export function parse(ini: string, options?: ParserOptions): object {
 
         // Parse Values
         const valueMatch = line.match(reValue);
-        if (valueMatch) {
+        if (valueMatch && valueMatch[1]) {
             if (["__proto__", "constructor", "prototype"].includes(valueMatch[1])) {
                 throw new ParseError(`Invalid Key Name: ${valueMatch[1]}`);
             }
@@ -148,22 +148,22 @@ export function parse(ini: string, options?: ParserOptions): object {
                 obj[lastSection] = {}
             }
 
-            if (valueMatch[2] == "") {
-                lastList = valueMatch[1];
-                continue;
-            }
-
             if (obj[lastSection][valueMatch[1]] && options.disallowDuplicatedKeys) {
                 throw new ParseError(`Detected duplicated key: ${valueMatch[1]} in section [${lastSection}]`)
             }
 
-            let v = valueMatch[2];
-
-            if (v.startsWith("\"") && v.endsWith("\"")) {
-                v = v.substring(1, v.length - 1);
+            if (valueMatch[2] === "") {
+                lastList = valueMatch[1];
+                continue;
             }
 
-            obj[lastSection][valueMatch[1]] = v;
+            let value = valueMatch[2] ?? "";
+
+            if (value.startsWith("\"") && value.endsWith("\"")) {
+                value = value.substring(1, value.length - 1);
+            }
+
+            obj[lastSection][valueMatch[1]] = value;
 
             continue;
         }
@@ -210,9 +210,7 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
 
     let str = "";
 
-    for (const sectionName of Object.keys(obj)) {
-        const sectionValues = obj[sectionName];
-
+    for (const [sectionName, sectionValues] of Object.entries(obj)) {
         if (Object.keys(sectionValues).length === 0) {
             continue;
         }
