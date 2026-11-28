@@ -167,7 +167,7 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
     for (const sectionName of Object.keys(obj)) {
         const sectionValues = obj[sectionName];
 
-        if (sectionValues.length < 1) {
+        if (Object.keys(sectionValues).length === 0) {
             continue;
         }
 
