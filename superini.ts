@@ -125,7 +125,7 @@ export function parse(ini: string, options?: ParserOptions): object {
                 throw new ParseError(`Invalid Section Name: ${sectionMatch[1]}`);
             }
 
-            if (sectionMatch[1] && options.disallowDuplicatedSections) {
+            if (obj[sectionMatch[1]] && options.disallowDuplicatedSections) {
                 throw new ParseError(`Detected duplicated section: [${sectionMatch[1]}]`)
             }
 
