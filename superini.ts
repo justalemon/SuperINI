@@ -190,6 +190,11 @@ export function parse(ini: string, options?: ParserOptions): object {
         }
     }
 
+    // Handle last empty section
+    if (!options.skipEmptySections && !Object.hasOwn(obj, lastSection)) {
+        obj[lastSection] = Object.create(null);
+    }
+
     return obj;
 }
 
