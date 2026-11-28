@@ -178,7 +178,7 @@ export function parse(ini: string, options?: ParserOptions): object {
             if (options.skipNewLineEscape) {
                 obj[lastSection][valueMatch[1]] = value;
             } else {
-                obj[lastSection][valueMatch[1]] = value.replaceAll("\\n", "\n");
+                obj[lastSection][valueMatch[1]] = value.replaceAll("\\n", "\n").replaceAll("\\r", "\r");
             }
         }
     }
@@ -238,7 +238,7 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
             if (type === "bigint" || type === "boolean" || type === "number" || (type === "string" && options.skipNewLineEscape)) {
                 str += `${key} = ${value}\n`;
             } else if (type === "string") {
-                str += `${key} = ${value.replaceAll("\n", "\\n")}\n`;
+                str += `${key} = ${value.replaceAll("\n", "\\n").replaceAll("\r", "\\r")}\n`;
             } else if (Array.isArray(value)) {
                 str += `${key} =\n`;
 
