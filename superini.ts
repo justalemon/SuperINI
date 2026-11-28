@@ -234,6 +234,14 @@ export function dump(obj: Record<string, Record<string, any>>, options?: DumpOpt
     let str = "";
 
     for (const [sectionName, sectionValues] of Object.entries(obj)) {
+        if (sectionValues === null) {
+            throw new DumpError(`Expected object for section [${sectionName}], got null`);
+        } else if (Array.isArray(sectionValues)) {
+            throw new DumpError(`Expected object for section [${sectionName}], got Array`);
+        } else if (typeof(sectionValues) !== "object") {
+            throw new DumpError(`Expected object for section [${sectionName}], got ${typeof(sectionValues)}`);
+        }
+    
         if (Object.keys(sectionValues).length === 0) {
             continue;
         }
