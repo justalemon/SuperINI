@@ -53,4 +53,7 @@ describe("testing parser", () => {
     test("parse double quoted values strings", () => {
         expect(parse("[section]\nvalue=\"hi\"")).toMatchObject({ section: { value: "hi" } });
     });
+    test("parse multiple empty sections", () => {
+        expect(parse("[a]\n[b]")).toMatchObject({ a: {}, b: {} });
+    });
 });
